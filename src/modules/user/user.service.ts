@@ -15,7 +15,7 @@ export class UserService {
     async create(createUserDto: CreateUserDto) {
         const newUser = new User();
         Object.assign(newUser, createUserDto as User);
-        return await this.userRepository.save(newUser);
+        return (await this.userRepository.save(newUser)).toListDto();
     }
 
     async update(id: string, updateUserDto: UpdateUserDto) {
@@ -24,11 +24,14 @@ export class UserService {
             throw new NotFoundException('User not found');
         }
         Object.assign(user, updateUserDto as User);
-        return await this.userRepository.save(user);
+        return (await this.userRepository.save(user)).toListDto();
     }
 
     async remove(id: string) {
-        return `This action removes a #${id} user`;
+        const result = await this.userRepository.delete(id);
+        if (!result.affected) {
+            throw new NotFoundException('User not found');
+        }
     }
 
     async findByEmail(email: string) {

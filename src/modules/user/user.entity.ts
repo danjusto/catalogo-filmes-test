@@ -6,6 +6,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { ListUserDto } from './dto/list-user.dto';
 
 @Entity({ name: 'users' })
 export class User {
@@ -23,4 +24,8 @@ export class User {
     updatedAt: string;
     @DeleteDateColumn({ name: 'deleted_at' })
     deletedAt: string;
+
+    toListDto() {
+        return new ListUserDto(this.id, this.fullName, this.email);
+    }
 }
