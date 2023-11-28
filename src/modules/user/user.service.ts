@@ -12,13 +12,13 @@ export class UserService {
         private readonly userRepository: Repository<User>,
     ) {}
 
-    async create(createUserDto: CreateUserDto) {
+    async executeCreate(createUserDto: CreateUserDto) {
         const newUser = new User();
         Object.assign(newUser, createUserDto as User);
         return (await this.userRepository.save(newUser)).toListDto();
     }
 
-    async update(id: string, updateUserDto: UpdateUserDto) {
+    async executeUpdate(id: string, updateUserDto: UpdateUserDto) {
         const user = await this.userRepository.findOneBy({ id });
         if (user === null) {
             throw new NotFoundException('User not found');
@@ -27,7 +27,7 @@ export class UserService {
         return (await this.userRepository.save(user)).toListDto();
     }
 
-    async remove(id: string) {
+    async executeRemove(id: string) {
         const result = await this.userRepository.delete(id);
         if (!result.affected) {
             throw new NotFoundException('User not found');

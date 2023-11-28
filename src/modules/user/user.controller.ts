@@ -17,7 +17,7 @@ export class UserController {
 
     @Post()
     async create(@Body() createUserDto: CreateUserDto) {
-        return await this.userService.create(createUserDto);
+        return await this.userService.executeCreate(createUserDto);
     }
 
     @Put('/:id')
@@ -25,12 +25,12 @@ export class UserController {
         @Param('id') id: string,
         @Body() updateUserDto: UpdateUserDto,
     ) {
-        return await this.userService.update(id, updateUserDto);
+        return await this.userService.executeUpdate(id, updateUserDto);
     }
 
     @Delete('/:id')
     @HttpCode(204)
     async remove(@Param('id') id: string) {
-        await this.userService.remove(id);
+        await this.userService.executeRemove(id);
     }
 }
