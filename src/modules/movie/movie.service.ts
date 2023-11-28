@@ -19,11 +19,15 @@ export class MovieService {
     }
 
     async executeFindAll() {
-        return `This action returns all movie`;
+        return await this.movieRepository.find();
     }
 
     async executeFindOne(id: string) {
-        return `This action returns a #${id} movie`;
+        const movie = await this.movieRepository.findOneBy({ id });
+        if (movie === null) {
+            throw new NotFoundException('Movie not found');
+        }
+        return movie;
     }
 
     async executeUpdate(id: string, updateMovieDto: UpdateMovieDto) {
@@ -36,6 +40,9 @@ export class MovieService {
     }
 
     async executeRemove(id: string) {
-        return `This action removes a #${id} movie`;
+        const result = await this.movieRepository.delete(id);
+        if (!result.affected) {
+            throw new NotFoundException('Movie not found');
+        }
     }
 }

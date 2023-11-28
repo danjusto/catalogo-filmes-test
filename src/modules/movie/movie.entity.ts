@@ -1,7 +1,6 @@
 import {
     Column,
     CreateDateColumn,
-    DeleteDateColumn,
     Entity,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -22,6 +21,4 @@ export class Movie {
     createdAt: string;
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: string;
-    @DeleteDateColumn({ name: 'deleted_at' })
-    deletedAt: string;
 }
