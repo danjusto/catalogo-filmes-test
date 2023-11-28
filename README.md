@@ -1,4 +1,4 @@
-# API PDV-Cubos
+# API Catálogo de Filmes
 
 API desenvolvida para um teste de uma oportunidade de desenvolvedor na MKS. Trata-se de um catálago de filmes.
 
