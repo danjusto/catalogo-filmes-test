@@ -7,12 +7,15 @@ import {
     Delete,
     Put,
     UseInterceptors,
+    UseGuards,
 } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
+@UseGuards(AuthenticationGuard)
 @Controller('/movies')
 export class MovieController {
     constructor(private readonly movieService: MovieService) {}
