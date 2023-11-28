@@ -6,6 +6,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { Genre } from './enum/genre.enum';
+import { ListMovieDto } from './dto/list-movie.dto';
 
 @Entity({ name: 'movies' })
 export class Movie {
@@ -21,4 +22,13 @@ export class Movie {
     createdAt: string;
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: string;
+
+    toListDto() {
+        return new ListMovieDto(
+            this.id,
+            this.title,
+            this.genre,
+            this.description,
+        );
+    }
 }

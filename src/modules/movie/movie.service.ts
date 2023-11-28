@@ -15,11 +15,21 @@ export class MovieService {
     async executeCreate(createMovieDto: CreateMovieDto) {
         const newMovie = new Movie();
         Object.assign(newMovie, createMovieDto as Movie);
-        return await this.movieRepository.save(newMovie);
+        return (await this.movieRepository.save(newMovie)).toListDto();
     }
 
     async executeFindAll() {
-        return await this.movieRepository.find();
+        const moviesSaved = await this.movieRepository.find();
+        const moviesList = moviesSaved.map((movie) => movie.toListDto());
+        return moviesList.sort((a, b) => {
+            if (a.title.toUpperCase() < b.title.toUpperCase()) {
+                return -1;
+            }
+            if (a.title.toUpperCase() > b.title.toUpperCase()) {
+                return 1;
+            }
+            return 0;
+        });
     }
 
     async executeFindOne(id: string) {
@@ -27,7 +37,7 @@ export class MovieService {
         if (movie === null) {
             throw new NotFoundException('Movie not found');
         }
-        return movie;
+        return movie.toListDto();
     }
 
     async executeUpdate(id: string, updateMovieDto: UpdateMovieDto) {
@@ -36,7 +46,7 @@ export class MovieService {
             throw new NotFoundException('Movie not found');
         }
         Object.assign(movie, updateMovieDto as Movie);
-        return await this.movieRepository.save(movie);
+        return (await this.movieRepository.save(movie)).toListDto();
     }
 
     async executeRemove(id: string) {
