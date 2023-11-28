@@ -24,7 +24,10 @@ import { LoggerGlobalInterceptor } from './resources/interceptors/logger-global.
         }),
         CacheModule.registerAsync({
             useFactory: async () => ({
-                store: await redisStore({ ttl: 15 * 1000 }),
+                store: await redisStore({ 
+                    ttl: 15 * 1000,
+                    url: 'redis://red-clj378i4ed1s73bn2fo0:6379'
+                }),
             }),
             isGlobal: true,
         }),
